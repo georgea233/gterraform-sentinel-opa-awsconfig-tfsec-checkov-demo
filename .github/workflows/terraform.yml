@@ -4,11 +4,14 @@ on:
   push:
     branches:
       - main
+      - dev
+      - '*'
   workflow_dispatch: 
 
 jobs:
   terraform:
     runs-on: ubuntu-latest 
+    if: "!contains(github.event.head_commit.message, 'destroy')"  #Prevent this job from running if 'destroy' is in the commit message
 
     steps:    
       - name: Checkout code
@@ -102,7 +105,7 @@ jobs:
 
   destroy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'  # Only run destroy when manually triggered
+    if: contains(github.event.head_commit.message, 'destroy') || github.event_name == 'workflow_dispatch'  # Run this job if 'destroy' is in the commit message or manually triggered
 
     steps:
       - name: Checkout code
@@ -124,8 +127,11 @@ jobs:
         run: terraform init
         working-directory: ./terraform
 
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
-        working-directory: ./terraform
+    #   - name: Check and Retry Terraform Destroy
+#         run: |
+#           for i in {1..5}; do
+#             terraform destroy -auto-approve && break || (echo "State lock detected. Retrying in 10 seconds..." && sleep 10)
+#           done
+#         working-directory: ./terraform/infra
 
         ##rt4rt4rerewrfn
