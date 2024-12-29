@@ -35,9 +35,7 @@ jobs:
           chmod +x opa
           sudo mv opa /usr/local/bin/opa
           sudo ln -s /usr/local/bin/opa /usr/bin/opa   # Create a symlink in /usr/bin to ensure it's in the default PATH
-
-      - name: Check OPA Installation
-        run: |
+          # Check if OPA is installed correctly
           which opa || echo "OPA not found"
           echo "PATH is: $PATH"
 
@@ -69,6 +67,9 @@ jobs:
 
       - name: OPA Policy Evaluation
         run: |
+          # Ensure OPA is in the path before running eval
+          echo "Verifying OPA installation..."
+          which opa
           /usr/local/bin/opa eval --format pretty --data ./terraform/policies/opa.rego \
           --input ./terraform/tfplan "data.opa.deny"
 
