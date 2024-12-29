@@ -24,8 +24,8 @@ jobs:
       - name: Run tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
 
-      - name: Execute tfsec
-        run: tfsec .
+    #   - name: Execute tfsec
+    #     run: tfsec .
 
     #   - name: Run Checkov
     #     uses: bridgecrewio/checkov-action@v12
@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -109,7 +109,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -130,18 +130,3 @@ jobs:
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
         working-directory: ./terraform
-
-
-
-
-
-
-
-
-      - name: Terraform Destroy       
-        run: terraform destroy -auto-approve 
-        working-directory: ./terraform
-
-
-
-
