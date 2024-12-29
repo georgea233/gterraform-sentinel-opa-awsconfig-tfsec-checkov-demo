@@ -63,6 +63,10 @@ jobs:
         run: terraform show tfplan
         working-directory: ./terraform
 
+      - name: Export Terraform Plan as JSON
+        run: terraform show -json tfplan > ./terraform/plan.json
+        working-directory: ./terraform 
+
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v3
         with:
@@ -70,9 +74,12 @@ jobs:
           path: ./terraform/tfplan
 
       - name: OPA Policy Evaluation
-        run: |
-         opa eval --format pretty --data ./terraform/policies/opa.rego \
-         --input ./terraform/plan.json "data.opa.deny"
+        # run: |
+        #  opa eval --format pretty --data ./terraform/policies/opa.rego \
+        #  --input ./terraform/plan.json "data.opa.deny"
+         run: |
+          /usr/local/bin/opa eval --format pretty --data ./terraform/policies/opa.rego \
+          --input ./terraform/plan.json "data.opa.deny"
         # env:
         #   OPA_POLICY: ${{ secrets.OPA_POLICY }}  # Optional: Use this secret to fetch OPA policy from a secure location
 
@@ -108,9 +115,9 @@ jobs:
         run: terraform init
         working-directory: ./terraform
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
-        working-directory: ./terraform
+    #   - name: Terraform Apply
+    #     run: terraform apply -auto-approve tfplan
+    #     working-directory: ./terraform
 
   destroy:
     runs-on: ubuntu-latest
