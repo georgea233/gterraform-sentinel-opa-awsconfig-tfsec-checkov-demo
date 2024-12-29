@@ -127,6 +127,11 @@ jobs:
         run: terraform init
         working-directory: ./terraform
 
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+        working-directory: ./terraform
+
+
     #   - name: Check and Retry Terraform Destroy
 #         run: |
 #           for i in {1..5}; do
