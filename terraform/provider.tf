@@ -15,4 +15,3 @@ provider "aws" {
 }
 # Replace this with your bucket name!
 
-  
