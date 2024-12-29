@@ -63,15 +63,25 @@ jobs:
         run: terraform show tfplan
         working-directory: ./terraform
 
-      - name: Export Terraform Plan as JSON
-        run: terraform show -json ./terraform/tfplan > ./terraform/plan.json
-        working-directory: ./terraform 
-
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v3
         with:
           name: tfplan
           path: ./terraform/tfplan
+
+      - name: Download Terraform Plan
+        uses: actions/download-artifact@v3
+        with:
+          name: tfplan
+          path: ./terraform
+
+      - name: Convert Terraform Plan to JSON
+        run: terraform show -json ./terraform/tfplan > ./terraform/plan.json
+        working-directory: ./terraform
+
+      - name: Verify Plan JSON Output
+        run: cat ./terraform/plan.json
+        working-directory: ./terraform
 
       - name: OPA Policy Evaluation
         # run: |
