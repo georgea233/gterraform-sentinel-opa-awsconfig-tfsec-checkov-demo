@@ -24,13 +24,10 @@ jobs:
     #   - name: Run tfsec
     #     uses: aquasecurity/tfsec-action@v1.0.0
 
-    #   - name: Execute tfsec
-    #     run: tfsec .
-
     #   - name: Run Checkov
     #     uses: bridgecrewio/checkov-action@v12
     #     with:
-    #       directory: .
+    #       directory: ./terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1.4.0
