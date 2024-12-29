@@ -89,16 +89,22 @@ jobs:
           name: tfplan
           path: ./terraform
 
+      - name: Print Current Directory
+        run: pwd
+
+      - name: List Files in Terraform Directory
+        run: ls -al ./terraform
+
       - name: Terraform Init
         run: terraform init
         working-directory: ./terraform
 
       - name: Convert Terraform Plan to JSON
-        run: terraform show -json ./terraform/tfplan > ./terraform/plan.json
+        run: terraform show -json ./terraform/tfplan > /home/runner/work/${{ github.repository }}/terraform/plan.json
         working-directory: ./terraform
 
       - name: Verify Plan JSON Output
-        run: cat ./terraform/plan.json
+        run: cat /home/runner/work/${{ github.repository }}/terraform/plan.json
         working-directory: ./terraform
 
       - name: OPA Policy Evaluation
