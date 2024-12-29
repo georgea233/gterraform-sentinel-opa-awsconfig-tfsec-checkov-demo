@@ -89,14 +89,10 @@ jobs:
           name: tfplan
           path: ./terraform
 
-      - name: Print Current Directory
-        run: pwd
-
-      - name: List Files in Terraform Directory
-        run: ls -al ./terraform
-
       - name: Ensure terraform directory exists
-        run: mkdir -p ./terraform
+        run: |
+          mkdir -p ./terraform
+          ls -al ./terraform
 
       - name: Terraform Init
         run: terraform init
