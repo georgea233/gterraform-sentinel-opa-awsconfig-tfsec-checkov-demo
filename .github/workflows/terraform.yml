@@ -41,26 +41,30 @@ jobs:
         # Check if OPA is functioning by running the version
         opa version || echo "OPA not installed properly"
 
-    # Step 4: Download Terraform Plan artifact
-    - name: Download Terraform Plan artifact
-      uses: actions/download-artifact@v3
+    # Step 4: Terraform Init
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./terraform
+
+    # Step 5: Terraform Plan
+    - name: Terraform Plan
+      run: terraform plan -out=./terraform/tfplan
+      working-directory: ./terraform
+
+    # Step 6: Upload Terraform Plan as artifact
+    - name: Upload Terraform Plan as artifact
+      uses: actions/upload-artifact@v3
       with:
         name: tfplan
-        path: ./terraform/
+        path: ./terraform/tfplan
 
-    # Step 5: Verify the downloaded Terraform plan
-    - name: Verify downloaded Terraform plan
-      run: |
-        ls -l ./terraform/tfplan
-        echo "Checking the plan file..."
-
-    # Step 6: Convert Terraform plan to JSON format
+    # Step 7: Convert Terraform plan to JSON
     - name: Convert Terraform plan to JSON
       run: |
         terraform show -json ./terraform/tfplan > ./terraform/plan.json
         ls -l ./terraform/plan.json
 
-    # Step 7: Evaluate Terraform plan with OPA policies
+    # Step 8: Evaluate Terraform plan with OPA policies
     - name: Evaluate Terraform plan with OPA policies
       run: |
         # Ensure OPA is in the path before running eval
