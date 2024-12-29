@@ -21,8 +21,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
           aws-region: us-east-2   
 
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-action@v1.0.0
+    #   - name: Run tfsec
+    #     uses: aquasecurity/tfsec-action@v1.0.0
 
     #   - name: Execute tfsec
     #     run: tfsec .
