@@ -1,4 +1,4 @@
-name: terraform cicd pipeline
+name: terraform iac pipeline
 
 on:
   push:
@@ -316,3 +316,4 @@ jobs:
 # #         working-directory: ./terraform/infra
 
 ##fedfefewf3cds
+##fkgfgkjvdfvm
