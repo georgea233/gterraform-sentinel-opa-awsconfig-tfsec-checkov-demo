@@ -39,9 +39,9 @@ jobs:
 
       - name: Install OPA
         run: |
-          curl -L -o opa https://github.com/open-policy-agent/opa/releases/download/v0.46.0/opa_linux_amd64
-          chmod +x opa
-          sudo mv opa /usr/local/bin/opa
+          curl -L -o ./opa_binary https://github.com/open-policy-agent/opa/releases/download/v0.46.0/opa_linux_amd64
+          chmod +x ./opa_binary
+          sudo mv ./opa_ /usr/local/bin/opa
 
       - name: Terraform Init
         run: terraform init
@@ -66,7 +66,7 @@ jobs:
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v4
         with:
-          name: tfplan
+          name: tfplan-${{ github.run_id }}
           path: ./terraform/tfplan
 
   opa-policy-evaluation:
@@ -316,4 +316,4 @@ jobs:
 # #         working-directory: ./terraform/infra
 
 ##fedfefewf3cds
-#
+##fkgfgkjvdfvm
